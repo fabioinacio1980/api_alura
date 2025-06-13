@@ -1,16 +1,24 @@
 package med.voll.api.controller;
 
+import jakarta.validation.Valid;
 import med.voll.api.medico.DadosCadastroMedicos;
+import med.voll.api.medico.Medico;
+import med.voll.api.repository.IMedicoRespository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/doctor")
+@RequestMapping("/medicos")
 public class DoctorController {
 
-    @PostMapping
-    public void addDoctor(@RequestBody DadosCadastroMedicos dadosCadastroMedicos) {
-        System.out.println(dadosCadastroMedicos.endereco().cep());
+    @Autowired
+    private IMedicoRespository medicoRespository;
 
+    @PostMapping
+    @Transactional
+    public void addDoctor(@RequestBody @Valid DadosCadastroMedicos dados) {
+        medicoRespository.save(new Medico(dados));
     }
 }
 
