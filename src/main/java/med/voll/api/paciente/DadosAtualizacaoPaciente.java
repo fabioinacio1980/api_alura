@@ -2,6 +2,8 @@ package med.voll.api.paciente;
 
 import jakarta.validation.constraints.NotNull;
 import med.voll.api.endereco.DadosEndereco;
+import med.voll.api.endereco.Endereco;
+import med.voll.api.medico.Medico;
 
 public record DadosAtualizacaoPaciente(
         @NotNull
@@ -11,4 +13,17 @@ public record DadosAtualizacaoPaciente(
         DadosEndereco endereco
         ) {
 
+
+        public DadosAtualizacaoPaciente(Paciente paciente) {
+                this(paciente.getId(), paciente.getNome(), paciente.getTelefone(), new DadosEndereco(
+                                paciente.getEndereco().getLogradouro(),
+                                paciente.getEndereco().getBairro(),
+                                paciente.getEndereco().getCep(),
+                                paciente.getEndereco().getCidade(),
+                                paciente.getEndereco().getUf(),
+                                paciente.getEndereco().getNumero(),
+                                paciente.getEndereco().getComplemento()
+                        )
+                );
+        }
 }
