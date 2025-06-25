@@ -15,19 +15,29 @@ public interface IMedicoRespository extends JpaRepository<Medico, Long> {
     Page<Medico> findAllByAtivoTrue(Pageable pageable);
 
     @Query("""
-            SELECT m FROM Medicos m
-            WHERE 
+            select m from Medicos m
+            where
             m.ativo = true
-            AND 
+            and
             m.especialidade = :especialidade
-            AND 
+            and
             m.id not in(
-                SELECT c.medico.id FROM
-                Consulta c
-                WHERE
+                select c.medico.id from Consulta c
+                where
                 c.data = :data
+        and
+                c.motivoCancelamento is null
             )
             order by rand()
-            limit 1""")
+            limit 1
+""")
     Medico escolherMedicoAleatorioLivreNaData(Especialidade especialidade, @NotNull @Future LocalDateTime data);
+
+    @Query("""
+            SELECT m.ativo 
+                FROM Medicos m
+            WHERE 
+            m.id = :id
+    """)
+    Boolean findAtivoById(Long id);
 }
