@@ -5,12 +5,8 @@ import med.voll.api.domain.consultas.DadosAgendamentoConsulta;
 import med.voll.api.domain.consultas.DadosCancelamentoConsulta;
 import med.voll.api.domain.consultas.DadosDetalhamentoConsulta;
 import med.voll.api.domain.medico.Medico;
-import med.voll.api.domain.paciente.Paciente;
 import med.voll.api.infra.exception.ValidacaoException;
-import med.voll.api.repository.IConsultaRepository;
-import med.voll.api.repository.IMedicoRespository;
-import med.voll.api.repository.IPacienteRespository;
-import med.voll.api.repository.IValidadorAgendamentoConsulta;
+import med.voll.api.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -32,7 +28,7 @@ public class AgendaDeConsultas {
     private List<IValidadorAgendamentoConsulta> validadores;
 
     @Autowired
-    private List<ValidadorCancelamentoDeConsulta> validadoresCancelamento;
+    private List<IValidadorCancelamentoDeConsulta> validadoresCancelamento;
     public DadosDetalhamentoConsulta agendarConsulta(DadosAgendamentoConsulta dados){
 
         //antes de tudo isso, preciso ter a implementação das regras de negócio
